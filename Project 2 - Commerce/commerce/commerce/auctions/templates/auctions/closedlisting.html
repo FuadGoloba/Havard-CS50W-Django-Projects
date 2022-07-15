@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Closed Listings</h2>
+    <div>
+        <table>
+            {% for listing in listings %}
+                <tr>
+                    <td>
+                        <div class="img-item">
+                            <a href="{% url 'item_detail' listing.id %}">
+                            <img class="card-img-top" src="{{ listing.image }}" alt="Card image cap" style="height: 200px;">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <h3>{{ listing.title }}</h3>
+                            <p>{{ listing.description }}</p>
+                            <p>Closed on {{ listing.listing_date}}</p>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                No Listing has been closed yet
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
