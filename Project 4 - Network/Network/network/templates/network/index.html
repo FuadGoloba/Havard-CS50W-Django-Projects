@@ -1,0 +1,49 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+<div id="all-posts-view">
+    {% if user.is_authenticated %}
+        
+        <div id="post-content-view" class="card mb-4" style="padding-bottom: 1rem; border-radius: 0; border: none">
+            <div class="row no-gutters">
+                <div class="col-sm-2" style="padding: .6rem .85rem .85rem;">
+                    <img class="card-img" style="border-radius: 999px;" alt="profile picture" width="30px" height="90px"
+                        src="{{ user.profile_picture.url }}">
+        </div>
+        <div class="col-md-10">
+            <div class="card-body" style="padding: 0; height: 100%">
+                <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group" style="margin-bottom: 0">
+                        <label for="postContent" style="display: none"></label>
+                        <textarea
+                                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                                class="form-control"
+                                id="postContent"
+                                rows="1"
+                                maxlength="280"
+                                name="content"
+                                placeholder="What's on your mind, {{ user.first_name }}?"></textarea>
+                            </div>
+                            <input id="post-content" class="post-submit btn btn-primary" type="submit" value="Tweet">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div style="height: 2rem"></div>
+    {% endif %}
+
+    {# including the allPosts template that loads all posts #}
+    {% include "network/allPosts.html" with posts=page_obj %}
+    <script src="{% static 'network/index.js' %}"></script>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    
+{% endblock %}
